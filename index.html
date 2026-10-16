@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Universe | Dream • Code • Fly</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #050b1b;
+            color: #f4f7ff;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Starry space background */
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(white 1px, transparent 1.5px),
+                radial-gradient(#62aaff 1px, transparent 1.5px),
+                linear-gradient(135deg, #071126, #101b42, #030711);
+            background-size: 65px 65px, 95px 95px, cover;
+            background-position: 0 0, 30px 40px, center;
+        }
+
+        /* Navigation bar */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 7%;
+            background: rgba(5, 11, 27, 0.9);
+            border-bottom: 1px solid #253b69;
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            color: #72c8ff;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #e2eaff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #72c8ff;
+        }
+
+        .theme-button,
+        .button {
+            border: none;
+            border-radius: 25px;
+            padding: 11px 18px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(90deg, #246bfe, #16b8e8);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .button:hover,
+        .theme-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px #168eff80;
+        }
+
+        /* Hero section */
+        .hero {
+            min-height: 78vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .jet {
+            font-size: 76px;
+            filter: drop-shadow(0 0 20px #299dff);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .eyebrow {
+            margin-top: 20px;
+            color: #73caff;
+            letter-spacing: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin: 12px 0;
+            font-size: clamp(38px, 7vw, 68px);
+            line-height: 1.15;
+        }
+
+        .highlight {
+            color: #72c8ff;
+            text-shadow: 0 0 25px #168eff60;
+        }
+
+        .hero p {
+            max-width: 580px;
+            color: #b8c7e8;
+            margin: 12px 0 25px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .button.secondary {
+            background: transparent;
+            border: 1px solid #72c8ff;
+            color: #72c8ff;
+        }
+
+        /* Content cards */
+        .section {
+            max-width: 1000px;
+            margin: auto;
+            padding: 55px 22px;
+            scroll-margin-top: 75px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        .section-title span {
+            color: #72c8ff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: rgba(15, 27, 56, 0.85);
+            border: 1px solid #263f70;
+            border-radius: 18px;
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #72c8ff;
+        }
+
+        .card .icon {
+            font-size: 30px;
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            color: #8dd5ff;
+        }
+
+        .card p {
+            color: #bdcbe5;
+            font-size: 14px;
+        }
+
+        .mission {
+            text-align: center;
+            border: 1px solid #315c94;
+            border-radius: 20px;
+            padding: 35px 20px;
+            background: linear-gradient(135deg, #10234a, #0b1228);
+        }
+
+        .mission blockquote {
+            font-size: clamp(20px, 4vw, 30px);
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .mission p {
+            color: #b8c7e8;
+        }
+
+        footer {
+            border-top: 1px solid #263f70;
+            padding: 25px 15px;
+            text-align: center;
+            color: #a8b8d8;
+            font-size: 13px;
+        }
+
+        /* Light theme, activated by JavaScript */
+        body.light {
+            background: #edf5ff;
+            color: #10213d;
+        }
+
+        body.light .stars {
+            opacity: 0;
+        }
+
+        body.light nav {
+            background: rgba(237, 245, 255, 0.95);
+            border-color: #b7cce8;
+        }
+
+        body.light nav a,
+        body.light .hero p,
+        body.light .card p,
+        body.light footer {
+            color: #344968;
+        }
+
+        body.light .card {
+            background: white;
+            border-color: #c7d9ee;
+        }
+
+        body.light .mission {
+            background: #dcecff;
+            border-color: #abc9ed;
+        }
+
+        body.light .mission p {
+            color: #344968;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 14px;
+                flex-wrap: wrap;
+            }
+
+            nav ul {
+                gap: 12px;
+            }
+
+            .hero {
+                min-height: 70vh;
+            }
+
+            .jet {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stars"></div>
+
+    <nav>
+        <div class="logo">✦ MY UNIVERSE</div>
+
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#mission">Mission</a></li>
+        </ul>
+
+        <button class="theme-button" id="themeButton">
+            ☀️ Theme
+        </button>
+    </nav>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="jet" aria-label="Fighter jet">✈️</div>
+
+            <div class="eyebrow">DREAM • CODE • FLY</div>
+
+            <h1>
+                Hello, I'm <span class="highlight">Pakhi!</span>
+            </h1>
+
+            <p>
+                A curious mind, a future tech professional,
+                and a dreamer looking beyond the stars.
+                Welcome to my little corner of the universe.
+            </p>
+
+            <div class="button-row">
+                <a href="#about">
+                    <button class="button">Explore My World ↗</button>
+                </a>
+
+                <button class="button secondary" id="surpriseButton">
+                    Mission Message ✨
+                </button>
+            </div>
+
+            <p id="message" aria-live="polite"></p>
+        </section>
+
+        <section class="section" id="about">
+            <h2 class="section-title">About <span>Me</span></h2>
+
+            <div class="grid">
+                <article class="card">
+                    <div class="icon">🎓</div>
+                    <h3>The Learner</h3>
+                    <p>
+                        Exploring AI, Data Science, programming,
+                        and the exciting world of technology.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="icon">🚀</div>
+                    <h3>The Dreamer</h3>
+                    <p>
+                        Big dreams, steady progress, and the courage
+                        to keep learning even when it's difficult.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="icon">🌌</div>
+                    <h3>The Explorer</h3>
+                    <p>
+                        Curious about the universe, aviation,
+                        science, and everything yet to discover.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="skills">
+            <h2 class="section-title">My <span>Launchpad</span></h2>
+
+            <div class="grid">
+                <article class="card">
+                    <div class="icon">💻</div>
+                    <h3>Web Development</h3>
+                    <p>Learning HTML, CSS, and JavaScript.</p>
+                </article>
+
+                <article class="card">
+                    <div class="icon">☕</div>
+                    <h3>Java Programming</h3>
+                    <p>Practising programming and problem-solving.</p>
+                </article>
+
+                <article class="card">
+                    <div class="icon">🧠</div>
+                    <h3>AI & Data Science</h3>
+                    <p>Building my understanding of intelligent technology.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="mission">
+            <div class="mission">
+                <div class="jet">🛩️</div>
+
+                <blockquote>
+                    "The sky is not the limit. It's the beginning."
+                </blockquote>
+
+                <p>
+                    One line of code, one lesson, one step closer
+                    to the dream.
+                </p>
+
+                <br>
+
+                <button class="button" id="missionButton">
+                    Start My Mission 🚀
+                </button>
+
+                <p id="missionStatus" aria-live="polite"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with curiosity and a little stardust ✨</p>
+        <p>© <span id="year"></span> My Universe</p>
+    </footer>
+
+    <script>
+        // Change between dark and light themes
+        const themeButton = document.getElementById("themeButton");
+
+        themeButton.addEventListener("click", function () {
+            document.body.classList.toggle("light");
+
+            if (document.body.classList.contains("light")) {
+                themeButton.textContent = "🌙 Dark";
+            } else {
+                themeButton.textContent = "☀️ Theme";
+            }
+        });
+
+        // Show a random motivational message
+        const messages = [
+            "Mission accepted! Keep moving forward. 🚀",
+            "Every expert was once a beginner. ✨",
+            "Dream big. Learn daily. Fly high. ✈️",
+            "Your next line of code could surprise you! 💻"
+        ];
+
+        document.getElementById("surpriseButton")
+            .addEventListener("click", function () {
+                const randomIndex = Math.floor(
+                    Math.random() * messages.length
+                );
+
+                document.getElementById("message").textContent =
+                    messages[randomIndex];
+            });
+
+        // Mission button interaction
+        document.getElementById("missionButton")
+            .addEventListener("click", function () {
+                document.getElementById("missionStatus").textContent =
+                    "MISSION STATUS: Learning in progress. Keep going! 🛰️";
+            });
+
+        // Automatically display the current year
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+    </script>
+</body>
+</html>
